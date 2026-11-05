@@ -1,5 +1,7 @@
 # Keytape KT-4
 
+> **This is the `gpui` branch:** Keytape with a [GPUI](https://gpui.rs) front end (experimental). [`gpui/README.md`](gpui/README.md) explains how it's built, run and tested. The JUCE app described below still builds from this branch. [`main`](https://github.com/csprech/keytape/tree/main) keeps it unchanged.
+
 A desktop synthesizer built around a 4-track tape, made for research. It has synth engines, a drum machine and sampler, effects, LFOs, sequencers, a mixer, and the tape itself with its tricks and edits. Its keys, encoders, screens and tape behave like the instrument it studies. That instrument is teenage engineering's OP–1 field; the [research notes](docs/research.md) cover what it does and where each behaviour comes from.
 
 Keytape is original work. It doesn't use teenage engineering's names, logos, artwork, screen graphics, presets or samples. Its engines, effects, modulators and sequencers have their own names, and its screens and sounds are its own. "OP–1" and "teenage engineering" are trademarks of teenage engineering AB and appear here only to say which instrument was studied.
@@ -158,3 +160,13 @@ open build/Keytape_artefacts/Release/Keytape.app
   KEYTAPE_DIR=/tmp/keytape KEYTAPE_SETTINGS_DIR=/tmp/keytape-settings KEYTAPE_SELFTEST=/tmp/report.txt \
       build/Keytape_artefacts/Release/Keytape.app/Contents/MacOS/Keytape
   ```
+
+## In the Tabletop studio
+
+Keytape also runs inside [Tabletop](https://github.com/csprech/tabletop), a studio where devices sit on a wooden table and you cable them together.
+- `keytape-module.cmake` lists the sources a host compiles; this app builds from the same lists.
+- `src/plugin/KeytapeProcessor` is the instrument as an audio processor, with no audio device of its own. Its channels are its jacks:
+  - **4 inputs:** line in L/R and USB audio L/R; an uncabled pair is silent;
+  - **2 outputs:** L/R; with sync out, the left one carries the pulses;
+  - **MIDI in and out:** notes, CCs and clock.
+- Its tapes, mixdowns and snapshots use the same `Music/Keytape` folder as the app; its sounds and settings are saved with the table.
