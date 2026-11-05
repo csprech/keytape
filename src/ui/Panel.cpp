@@ -306,7 +306,7 @@ bool Panel::keyStateChanged (bool)
 {
     bool any = false;
     for (auto it = heldNotes.begin(); it != heldNotes.end();)
-        if (! juce::KeyPress::isKeyCurrentlyDown (it->first))
+        if (! keyIsDown (it->first))
         {
             const int k = it->second;
             engine.withMachine ([k] (Machine& mc) { mc.keyUp (k); });
@@ -316,7 +316,7 @@ bool Panel::keyStateChanged (bool)
         else
             ++it;
     for (auto it = heldButtons.begin(); it != heldButtons.end();)
-        if (! juce::KeyPress::isKeyCurrentlyDown (it->first))
+        if (! keyIsDown (it->first))
         {
             const Key k = it->second;
             engine.withMachine ([k] (Machine& mc) { mc.release (k); });

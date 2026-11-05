@@ -33,6 +33,8 @@ void drawLegend (juce::Graphics& g, Key k, juce::Rectangle<float> r);
 /** A square cell key: a flat off-white tile with a round boss (most keys) or a square boss (the blank key). */
 class CellKey : public juce::Component
 {
+    friend struct GpuiAdapter;
+
 public:
     enum class Boss { Round, Square };
     CellKey (Key key, Boss boss);
@@ -54,6 +56,8 @@ private:
     (whose width varies; `discX` is the disc's centre, 0..1 across the tile). */
 class PianoKey : public juce::Component
 {
+    friend struct GpuiAdapter;
+
 public:
     PianoKey (int index, bool black, float discX = 0.5f);
     int index;
@@ -74,6 +78,8 @@ private:
     without a drag is a tap. */
 class Encoder : public juce::Component
 {
+    friend struct GpuiAdapter;
+
 public:
     explicit Encoder (int index);
     int index;
@@ -97,6 +103,8 @@ private:
 /** The volume knob in its cell: drag up or down (or scroll) to set it. */
 class VolumeKnob : public juce::Component
 {
+    friend struct GpuiAdapter;
+
 public:
     VolumeKnob();
     std::function<float()> get;
@@ -114,6 +122,8 @@ private:
 /** The level meter on the right edge: a column of small white LEDs (the battery while help is held). */
 class LevelMeter : public juce::Component
 {
+    friend struct GpuiAdapter;
+
 public:
     void setLevel (float level, bool battery);
     void paint (juce::Graphics&) override;
