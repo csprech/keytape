@@ -158,3 +158,22 @@ open build/Keytape_artefacts/Release/Keytape.app
   KEYTAPE_DIR=/tmp/keytape KEYTAPE_SETTINGS_DIR=/tmp/keytape-settings KEYTAPE_SELFTEST=/tmp/report.txt \
       build/Keytape_artefacts/Release/Keytape.app/Contents/MacOS/Keytape
   ```
+
+## In the Tabletop studio
+
+Keytape also runs inside [Tabletop](https://github.com/csprech/tabletop), a studio where devices sit on a wooden table and you cable them together.
+- `keytape-module.cmake` lists the sources a host compiles; this app builds from the same lists.
+- `src/plugin/KeytapeProcessor` is the instrument as an audio processor, with no audio device of its own. Its channels are its jacks:
+  - **4 inputs:** line in L/R and USB audio L/R; an uncabled pair is silent;
+  - **2 outputs:** L/R; with sync out, the left one carries the pulses;
+  - **MIDI in and out:** notes, CCs and clock.
+- Its tapes, mixdowns and snapshots use the same `Music/Keytape` folder as the app; its sounds and settings are saved with the table.
+
+## A GPUI version (experimental)
+
+The [`gpui` branch](https://github.com/csprech/keytape/tree/gpui) has Keytape with a [GPUI](https://gpui.rs) front end.
+- The C++ engine and panel stay the same. They sit behind a small C interface.
+- A Rust app draws the panel on the GPU and sends it the mouse and keyboard.
+- Its own README, `gpui/README.md` on that branch, explains how it's built, run and tested.
+
+This branch (`main`) stays the JUCE app.
